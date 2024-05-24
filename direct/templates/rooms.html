@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        *{font-family:'Poppins', sans-serif; color: white; margin: 0; padding: 0;}
+        html{scrollbar-width: none;}
+        body{
+            background-image: url("{% static 'images/bckgr.jpg' %}");
+            background-position-y: 60%;
+            background-position-x: 30%;
+            background-size: 170%;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+        header{
+            width: 100%;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            display: flex;
+            justify-content:start;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: background-color 0.5s ease;
+            z-index: 1000;
+        }
+        header{
+            width: 100%;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: background-color 0.5s ease;
+            z-index: 1000;
+        }
+        header img{
+                transform: scale(0.15);
+        }
+
+        .logobox{
+            display: flex; 
+            flex-direction:row; 
+            align-items: center;
+            justify-content:center;
+            width: 500px;
+            height: 80px;
+        }
+        header ul{
+            margin-right: 30px;
+            color: black; 
+            font-size: 25px;
+            list-style:none; 
+            display: flex; 
+            flex-direction:row; 
+            align-items: center;
+            justify-content:right; 
+            column-gap: 60px;
+            width:2000px;
+            transition: color 0.5s ease;
+        }
+        header ul li{
+            color: inherit !important;
+        }
+        header ul a{
+            color: inherit !important;
+            display: flex;
+            width: max-content;
+        }
+
+        footer{
+            width: 100%;
+            height: 100px;
+            background-color: #000000;
+        }
+        .content{
+            display: flex; 
+            flex-direction:column; 
+            align-items: center;
+            justify-content:center;
+            height:120vh;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+        a:link{
+            color:white;
+            text-decoration: none;
+        }
+        a:visited{
+            color:white;
+            text-decoration: none;
+        }
+        a:hover{
+            color:white;
+            text-decoration: underline;
+        }
+        select option{
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-container{
+            height: 750px;
+            width:96vw;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow-x: scroll;
+            position: relative;
+            padding: 50px;
+            scrollbar-width: thin;
+            scrollbar-color:  rgba(99, 99, 99, 0.8) rgba(0, 0, 0, 0.6);
+            padding-bottom:10px;
+        }
+        
+        .carousel-inner{
+            width:fit-content;
+            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+            column-gap: 100px;
+        }
+        .room-card{
+            padding-top: 30px;
+            background-color: #000000be;
+            flex-wrap:wrap;
+            height: 700px;
+            width: 500px;
+            display: flex;
+            row-gap: 30px;
+            justify-content:start;
+            align-items: center;
+            flex-direction: column;
+            box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .room-name{
+            font-weight: 500;
+            font-size: 25px;
+            background-color:rgb(74, 74, 74);
+            width:500px;
+            height:40px;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+        }
+        .name-inner{
+            position: relative;
+            font-weight: 500;
+            font-size: 25px;
+            background-color:rgb(74, 74, 74);
+            width: 100%;
+            height: 96%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .room-name::before{
+            position:absolute;
+            content: "";
+            background-color:white;
+            width: 0px;
+            height:40px;
+            animation: splash-out 0.4s ease-in;
+        }
+        .room-name:hover::before{
+           position:absolute;
+            content: "";
+            background-color:white;
+            width: 500px;
+            height:40px;
+            animation: splash-in 0.4s ease-out;
+        }
+        @keyframes splash-in{
+            from{width:0}
+            to{width:500px;}
+        }
+        @keyframes splash-out{
+            from{width:500px}
+            to{width:0;}
+        }
+        .room-photo{
+            position: relative;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            width: 403px;
+            height: 303px;
+            overflow: hidden;
+        }
+        .photo-inner{
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .room-photo:hover::before{
+            content: "";
+            width: 150px;
+            height: 550px;
+            background-color: white;
+            position: absolute;
+            z-index: 1;
+            animation: widen 0.8s ease-in, rotate 3.6s linear infinite;
+        }
+
+        @keyframes rotate{
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes widen{
+            from{width:0;}
+            to{width:150px;}
+        }
+        .room-photo img{
+            position:relative;
+            z-index: 2;
+            height: 130%;
+            width: 120%;
+        }
+
+        .room-description{
+            height:200px;
+            width:500px;
+            background:linear-gradient(90deg, #000000e1, rgba(0, 0, 0, 0));
+        }
+
+        .room-description p{
+            position: absolute;
+            width:480px;
+            z-index: 9;
+            padding: 10px;
+        }
+        .room-price{
+            background-color: rgb(74, 74, 74);
+            color: white;
+            font-size: 1.5em;
+            justify-self: end;
+            align-self: center;
+            margin-top:auto;
+            margin-bottom:20px;
+            width:100%;
+            display:flex;
+            justify-content: center;
+        }
+        #sign_out {
+            color:inherit;
+        }
+        #sign_out button{
+            color: inherit;
+            font-size: 25px;
+        }
+        #sign_out button:hover{
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header id="header">
+        <div class="logobox">
+          <img id="logo" src="{% static 'images/diamond.png'%}" alt="">
+        </div>
+          <ul id="headerul">
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li>
+              <form id="sign_out" method="post" action="{% url 'signout' %}" novalidate>{% csrf_token %}<button type="submit" style="background-color: rgba(0, 0, 0, 0); border:none;">Log out</button></form>
+            </li>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <li><a href="{%url 'signup'%}">Sign up</a></li>
+            <li><a href="{%url 'signin'%}">Log in</a></li>
+            {% endif %}
+            <li><a href="/">Main</a></li>
+          </ul>
+    </header>
+    <div class="content">
+        <div class="carousel-container">
+            <div class="carousel-inner">
+              {% for room in rooms %}
+              {% if room.is_available %}
+                <div class="room-card">
+                    
+                    <div class="room-name">
+                        <div class="name-inner">
+                            <a href="{% url 'booking' room.id %}">
+                                {{ room.name }}, {{ room.number }} for {{ room.capacity }} {% if room.capacity == 1 %} person {% else %} people {% endif %}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="room-photo">
+                        <div class="photo-inner">
+                            <a href="{% url 'booking' room.id %}">
+                                <img src="{{ room.photo.url }}" alt="">
+                                </a>
+                        </div>
+                    </div><div class="room-description">
+
+                        <p>{{ room.description }}</p>
+                    </div>
+
+                    <div class="room-price">
+                      {{ room.price }} USD per night
+                    </div>
+                </div>
+            {% endif %}
+              {% endfor %}
+              
+            </div>
+          </div>
+
+    </div>
+    <footer style="margin-bottom: 0px; position:absolute; margin-top: 500px; display:flex; justify-content: center; align-items:center; ">
+        <div class="footer-inner" style="color:white; display:flex; justify-content: space-around; align-items:center; column-gap:150px;">
+            <p>&copy; 2024 Diamond Hotel. All rights reserved.</p>
+            <p>Address: USA, Illinois, Cook county, Chicago, East Randolph Street, 300</p>
+            <p>Phone: +1312 (940)-63-87</p>
+            <p>Email: info@diamondhotel.com</p>
+            <p>See us on maps: <a href="https://yandex.ru/maps/-/CDfYRAOY">Yandex.Maps</a> | <a href="https://maps.app.goo.gl/ktJhHEDGhK79ksde9">Google Maps</a></p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'simplebar/simplebar.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const carouselInner = document.querySelector('.carousel-inner');
+            const scrollbar = new SimpleBar(carouselInner, {
+              autoHide: false,
+              scrollbarMaxSize: 20,
+              classNames: {
+                scrollbar: 'carousel-scrollbar',
+                track: 'carousel-scrollbar-track',
+                thumb: 'carousel-scrollbar-thumb'
+              }
+            });
+          });
+    
+    window.onscroll = function() {
+        var ul = document.getElementById("headerul");
+        var header = document.getElementById("header");
+        var logo = document.getElementById("logo");
+        if (window.pageYOffset > 0) {
+        logo.setAttribute('src', "{% static 'images/diamond_wh.png' %}")
+        ul.style.color = "white";
+        header.style.backgroundColor = "#000000f0";
+        } else {
+        logo.setAttribute('src', "{% static 'images/diamond.png' %}")
+        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        ul.style.color = "black";
+        }
+    };
+    </script>
+</body>
+</html>

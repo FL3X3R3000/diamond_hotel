@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        *{margin:0; padding: 0; font-family:'Poppins', sans-serif; color: white;}
+        body{
+            background-image: url("{% static 'images/bckgr.jpg' %}");
+            background-position-y: 60%;
+            background-position-x: 30%;
+            background-size:170%;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar{width: 0}
+        header{
+          width: 100%;
+          height: 100px;
+          background-color: rgba(0, 0, 0, 0);
+          display: flex;
+          justify-content:space-between;
+          align-items: center;
+          position: fixed;
+          top: 0;
+          left: 0;
+          transition: background-color 0.5s ease;
+          z-index: 1000;
+      }
+      header img{
+              transform: scale(0.15);
+      }
+
+      .logobox{
+          display: flex; 
+          flex-direction:row; 
+          align-items: center;
+          justify-content:center;
+          width: 500px;
+          height: 80px;
+      }
+      header ul{
+          margin-right: 30px;
+          color: black; 
+          font-size: 25px;
+          list-style:none; 
+          display: flex; 
+          flex-direction:row; 
+          align-items: center;
+          justify-content:right; 
+          column-gap: 60px;
+          width:2000px;
+          transition: color 0.5s ease;
+      }
+      header ul li{
+          color: inherit !important;
+      }
+      header ul a{
+          color: inherit !important;
+          display: flex;
+          width: max-content;
+      }
+
+        footer{
+            width: 100%;
+            height: 100px;
+            background-color: #000000;
+        }
+        .content{
+          display: flex; 
+          flex-direction:column; 
+          align-items: center;
+          justify-content:center;
+          height:120vh;
+          padding-top: 100px;
+          padding-bottom: 50px;
+      }
+
+        .booking-box{
+            width:60vw;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 50px;
+            border-radius: 10px;
+        }
+
+        .booking-box h1{
+          font-size: 36px;
+          margin-bottom: 50px;
+        }
+
+        .booking-box form{
+          margin-bottom: 50px;
+        }
+
+        .booking-box label{
+          display: block;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+
+        .booking-box input[type="text"],
+        .booking-box input[type="date"],
+        .booking-box select{
+          width: 100%;
+          padding: 10px;
+          font-size: 18px;
+          border-radius: 5px;
+          border: none;
+          margin-bottom: 20px;
+          background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .booking-box button[type="submit"]{
+          background-color: #ffcc00;
+          color: black;
+          padding: 10px 20px;
+          font-size: 20px;
+          border-radius: 5px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .booking-box button[type="submit"]:hover{
+          background-color: #e0b90f;
+        }
+
+        .available-rooms{
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 50px;
+          border-radius: 10px;
+        }
+
+        .available-rooms h2{
+          font-size: 36px;
+          margin-bottom: 50px;
+        }
+
+        .available-rooms ul{
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          row-gap: 20px;
+        }
+
+        .available-rooms li{
+          font-size: 20px;
+        }
+
+        a:link{
+            color:white;
+            text-decoration: none;
+        }
+        a:visited{
+            color:white;
+            text-decoration: none;
+        }
+        a:hover{
+            color:white;
+            text-decoration: underline;
+        }
+        select option{
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+        #sign_out {
+          color:inherit;
+      }
+        #sign_out button{
+          color: inherit !important;
+          font-size: 25px;
+        }
+        #sign_out button:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="logobox">
+          <img id="logo" src="{% static 'images/diamond.png' %}" alt="">
+        </div>
+          <ul id="headerul">
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li>
+              <form id="sign_out" method="post" action="{% url 'signout' %}" novalidate>{% csrf_token %}<button type="submit" style="background-color: rgba(0, 0, 0, 0); border:none;">Log out</button></form>
+            </li>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+            <li><a href="{%url 'signup'%}">Sign up</a></li>
+            <li><a href="{%url 'signin'%}">Log in</a></li>
+            {% endif %}
+            <li><a href="{% url 'rooms' %}">Rooms</a></li>
+            <li><a href="/">Main</a></li>
+          </ul>
+      </header>
+    <div class="content">
+        <div class="booking-box">
+            <h1>Book {{ room.name }} room {{ room.number }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="roomid" value="{{ roomid }}">
+                <button type="submit">Book</button>
+            </form>
+        
+    </div>
+
+    <footer style="margin-bottom: 0px; position:absolute; margin-top: 120vh; display:flex; justify-content: center; align-items:center; ">
+      <div class="footer-inner" style="color:white; display:flex; justify-content: space-around; align-items:center; column-gap:150px;">
+          <p>&copy; 2024 Diamond Hotel. All rights reserved.</p>
+          <p>Address: USA, Illinois, Cook county, Chicago, East Randolph Street, 300</p>
+          <p>Phone: +1312 (940)-63-87</p>
+          <p>Email: info@diamondhotel.com</p>
+          <p>See us on maps: <a href="https://yandex.ru/maps/-/CDfYRAOY">Yandex.Maps</a> | <a href="https://maps.app.goo.gl/ktJhHEDGhK79ksde9">Google Maps</a></p>
+      </div>
+  </footer>
+</body>
+    <script>
+        window.onscroll = function() {
+          var ul = document.getElementById("headerul");
+          var header = document.getElementById("header");
+          var logo = document.getElementById("logo");
+          if (window.pageYOffset > 0) {
+            logo.setAttribute('src', "{% static 'images/diamond_wh.png' %}")
+            ul.style.color = "white";
+            header.style.backgroundColor = "#000000f0";
+          } else {
+            logo.setAttribute('src', "{% static 'images/diamond.png' %}")
+            header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            ul.style.color = "black";
+          }
+        };
+      </script>
+</html>

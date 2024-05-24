@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        *{margin:0; padding: 0; font-family:'Poppins', sans-serif;}
+        body{
+
+            background-image: url("{% static 'images/bckgr.jpg' %}");
+            background-position-y: 60%;
+            background-position-x: 30%;
+            background-size: cover;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar{width: 0}
+        header{
+            width: 100%;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0);
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: background-color 0.5s ease;
+            z-index: 1000;
+        }
+        header img{
+                transform: scale(0.15);
+        }
+
+        .logobox{
+            display: flex; 
+            flex-direction:row; 
+            align-items: center;
+            justify-content:center;
+            width: 500px;
+            height: 80px;
+        }
+        header ul{
+            margin-right: 30px;
+            color: black; 
+            font-size: 25px;
+            list-style:none; 
+            display: flex; 
+            flex-direction:row; 
+            align-items: center;
+            justify-content:right; 
+            column-gap: 60px;
+            width:2000px;
+            transition: color 0.5s ease;
+        }
+        header ul li{
+            color: inherit !important;
+        }
+        header ul a{
+            color: inherit !important;
+            display: flex;
+            width: max-content;
+        }
+        .info h1{
+            font-size:90px;
+            text-shadow:#ffffff 5px 5px 10px;
+        }
+        .about{
+            height: 500px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+        .about .info{
+            width: 720px;
+            font-size:30px;
+        }
+        .about img{
+            width: 720px;
+            height: 378px;
+        }
+        .about #hr{
+            margin-right: 50px;
+            height: 300px;
+            width:1px;
+
+            background-color: black;
+            border: none;
+        }
+        
+        footer{
+            width: 100%;
+            height: 100px;
+            background-color: #000000;
+        }
+        .content{
+            display: flex;
+            justify-content: start;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 50px;
+            height: max-content;
+            padding-bottom: 10%;
+        }
+        .content .rooms{
+            width: 100vw;
+            color: white;
+            height: 700px;
+            padding: 5% 0 5% 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: #00000096;
+        }
+        a:link{
+            color:white;
+            text-decoration: none;
+        }
+        a:visited{
+            color:white;
+            text-decoration: none;
+        }
+        a:hover{
+            color:white;
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            width: 1800px;
+            padding: 2% 2%;
+            box-sizing: border-box;
+            height: 800px;
+        }
+        
+        .box {
+
+            flex: 1;
+            overflow: hidden;
+            transition: .5s;
+            margin: 0 2%;
+            box-shadow: 0 20px 30px rgba(0,0,0,.1);
+            line-height: 0;
+        }
+        
+        .box > img {
+            width: 200%;
+            height:600px;
+            object-fit: cover; 
+            transition: .5s;
+            background-position-x: 60%;
+        }
+        
+        .box > p {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            height: 100px;
+            line-height: 2.6;
+            background-color: #2625256e;
+        }
+        
+        .box:hover { flex: 1 1 50%; }
+        .box:hover > img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .leave-review{
+            display: flex;
+            justify-content:flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            margin-left: auto;
+            padding: 15px;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            justify-content: center;
+            color: white;
+            width: 40vw;
+            height: max-content;
+            background: linear-gradient(90deg,rgba(0, 0, 0, 0.38), #000000);
+
+        }
+        .leave-review form{
+            display: flex;
+            justify-content: start;
+            align-items: start;
+            flex-direction: column;
+            row-gap: 20px;
+            background-color: #1918186e;
+            width: 600px;
+            padding: 1%;
+        }
+        .leave-review form #id_content{
+            background-color: #000000aa;
+            border-style: none;
+            resize: none;
+            color: white;
+            overflow-wrap:break-word;
+            padding: 1%;
+            font-size: 20px;
+        }
+        .leave-review form button{
+            font-size: 18px;
+            width: 200px;
+            height: 35px;
+            border-radius: 0;
+            border-style: none;
+            background:linear-gradient(90deg,rgba(127, 127, 127, 0.114), #000000);
+            color: white;
+        }
+        .review-box{
+            padding: 15px;
+            font-size: 25px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-right: auto;
+            width: 40vw;
+            height: max-content;
+            background: linear-gradient(90deg,#000000d2, rgba(0, 0, 0, 0));
+        }
+
+        .review-box .card{
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            justify-content: center;
+            align-items: start;
+
+            padding: 10px;
+            width: 30vw;
+            background-color: #1918186e;
+        }
+        #rate img{
+            width: 32px;
+            height: 32px;
+        }
+        #sign_out button{
+            color: inherit;
+            font-size: 25px;
+        }
+        #sign_out button:hover{
+            text-decoration: underline;
+        }
+
+        .messages{
+            height: max-content;
+            background-color: #000000d2;
+            list-style:none;
+            display:flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: start;
+            padding-left:10px;
+            position: absolute;
+            left:0;
+            margin-top: 120px;
+            font-size: 15px;
+            color:white;
+            border: rgba(0, 0, 0, 0) solid 1px 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header id="header">
+      <div class="logobox">
+        <img id="logo" src="{% static 'images/diamond.png' %}" alt="">
+      </div>
+        <ul id="headerul" >
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li>
+            <form id="sign_out" method="post" action="{% url 'signout' %}" novalidate>{% csrf_token %}<button type="submit" style="background-color: rgba(0, 0, 0, 0); border:none;">Log out</button></form>
+          </li>
+          {% endif %}
+          {% if not request.user.is_authenticated %}
+          <li><a href="{%url 'signup'%}">Sign up</a></li>
+          <li><a href="{%url 'signin'%}">Log in</a></li>
+          {% endif %}
+          <li><a href="{% url 'rooms' %}">Rooms</a></li>
+        </ul>
+    </header>
+    <div class="content">
+        <ul class="messages">
+            {% if messages %}
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            {% endif %}
+        </ul> 
+        <div class="about">
+          <img src="{% static 'images/diamond_bl.png' %}" alt="">
+          <div id="hr"></div>
+          <div class="info">
+            <h1 style="color: white;">The Diamond</h1>
+            <p style="color: black">is the most prestige hotel in Chicago city.</p>
+          </div>
+        </div>
+        <div class="rooms">
+            <div class="room-disp">
+                <h1>You may book your room right now.</h1>
+            </div>
+            <div class="container">
+                <div class="box">
+                    <img src="{% static 'images/rooms/room-1.jpg' %}">
+                    <p class="room-p">Standard</p>
+                </div>
+                <div class="box">
+                    <img src="{% static 'images/rooms/lux-1.jpg' %}">
+                    <p class="room-p">Luxury</p>
+                </div>
+                <div class="box">
+                    <img src="{% static 'images/rooms/pres-1.jpg' %}">
+                    <p class="room-p">President</p>
+                </div>
+            </div>
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="leave-review">
+            <h1>Here you can make people know how prestigious we are. Rate us.</h1>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div id="rate">
+                    <img src="{% static 'images/diamond-semi.png' %}" alt="" id="star-1" onclick="rate(1)">
+                    <img src="{% static 'images/diamond-semi.png' %}" alt="" id="star-2" onclick="rate(2)">
+                    <img src="{% static 'images/diamond-semi.png' %}" alt="" id="star-3" onclick="rate(3)">
+                    <img src="{% static 'images/diamond-semi.png' %}" alt="" id="star-4" onclick="rate(4)">
+                    <img src="{% static 'images/diamond-semi.png' %}" alt="" id="star-5" onclick="rate(5)">
+                </div>
+                <input type="hidden" id="rating" name="rate_of" value="">
+                {% if form.rate.errors %}
+                    {% for error in form.rate.errors %}
+                        <p class="error" style="color: red;">{{ form.content.error}}</p>
+                    {% endfor %}
+                {% endif %}
+                {{ form.content }}
+                {% if form.content.errors %}
+                    {% for error in form.content.errors %}
+                        <p class="error" style="color: red;">{{ form.content.error}}</p>
+                    {% endfor %}
+                {% endif %}
+                <button type="submit">Submit review</button>
+            </form>
+          </div>
+        {% endif %}
+        
+        <div class="review-box">
+            {% for review in reviews %}
+                <div class="card">
+                    <div id="rate">
+                        {% for i in review.rate_of|get_range %}
+                            <img src="{% static 'images/diamond.png' %}" alt="">
+                        {% endfor %}
+                    </div>
+                    <h4>{{ review.published_at | date:"M d, Y" }} by {{ review.author.username }} </h4>
+                    <p style="background-color: #000000b5; padding: 1%; margin-left:-10px;width: 100%;">{{ review.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <footer style="margin-bottom: 0px; position:absolute; display:flex; justify-content: center; align-items:center; ">
+        <div class="footer-inner" style="color:white; display:flex; justify-content: space-around; align-items:center; column-gap:150px;">
+            <p>&copy; 2024 Diamond Hotel. All rights reserved.</p>
+            <p>Address: USA, Illinois, Cook county, Chicago, East Randolph Street, 300</p>
+            <p>Phone: +1312 (940)-63-87</p>
+            <p>Email: info@diamondhotel.com</p>
+            <p>See us on maps: <a href="https://yandex.ru/maps/-/CDfYRAOY">Yandex.Maps</a> | <a href="https://maps.app.goo.gl/ktJhHEDGhK79ksde9">Google Maps</a></p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+    function rate(star) {
+        document.getElementById("rating").value = star;
+        for (var i = 1; i <= 5; i++) {
+        var img = document.getElementById("star-" + i);
+        if (i <= star) {
+            img.src = "{% static 'images/diamond.png' %}";
+        } 
+        else {
+            img.src = "{% static 'images/diamond-semi.png' %}";
+        }
+        }
+    };
+    window.onscroll = function() {
+    var ul = document.getElementById("headerul");
+    var header = document.getElementById("header");
+    var logo = document.getElementById("logo");
+    if (window.pageYOffset > 0) {
+        logo.setAttribute('src', "{% static 'images/diamond_wh.png' %}")
+        ul.style.color = "white";
+        header.style.backgroundColor = "#000000f0";
+    } else {
+        logo.setAttribute('src', "{% static 'images/diamond.png' %}")
+        header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        ul.style.color = "black";
+    }
+    };
+    </script>
+</body>
+</html>
