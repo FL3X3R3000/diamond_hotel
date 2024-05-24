@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style-auth.css' %}">
+</head>
+
+<body style="height: 100vh;">
+    <header>
+        <img src="{% static 'images/diamond.png' %}" alt="">
+        <ul>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'signout' %}">Log out</a></li>
+          {% endif %}
+          {% if not request.user.is_authenticated %}
+          <li><a href="{%url 'signup'%}">Sign up</a></li>
+          <li><a href="{%url 'signin'%}">Log in</a></li>
+          {% endif %}
+          <li><a href="{% url 'booking' 1 %}">Book</a></li>
+          <li><a href="/">Main</a></li>
+        </ul>
+    </header>
+    <div class="content">
+        <div class="container">
+            <ul class="messages">
+                {% if messages %}
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            <div class="text">
+                Log In
+             </div>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="form-row">
+                    {% for field in loginform %}
+                        <div class="input-data">
+                            {{field}}
+                            <div class="underline"></div>
+                            <label for="">{{ field.label_tag }}</label>
+                            {% for error in field.errors %}
+                                <p class="error" style="color: red;">{{error}}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-row submit-btn">
+                    <div class="input-data">
+                       <div class="inner"></div>
+                       <input type="submit" value="submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer style="margin-bottom: 0px; position:absolute; margin-top: 100vh; display:flex; justify-content: center; align-items:center; ">
+        <div class="footer-inner" style="color:white; display:flex; justify-content: space-around; align-items:center; column-gap:150px;">
+            <p>&copy; 2024 Diamond Hotel. All rights reserved.</p>
+            <p>Address: USA, Illinois, Cook county, Chicago, East Randolph Street, 300</p>
+            <p>Phone: +1312 (940)-63-87</p>
+            <p>Email: info@diamondhotel.com</p>
+            <p>See us on maps: <a href="https://yandex.ru/maps/-/CDfYRAOY">Yandex.Maps</a> | <a href="https://maps.app.goo.gl/ktJhHEDGhK79ksde9">Google Maps</a></p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+    $(window).scroll(function(){
+        var ul = document.getElementById("headerul");
+        var header = document.getElementById("header");
+        var logo = document.getElementById("logo");
+        if (window.pageYOffset > 0) {
+            logo.setAttribute('src', "{% static 'images/diamond_wh.png' %}")
+            ul.style.color = "white";
+            header.style.backgroundColor = "#000000f0";
+        } else {
+            logo.setAttribute('src', "{% static 'images/diamond.png' %}")
+            header.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            ul.style.color = "black";
+        }
+    });
+    </script>
+</body>
+</html>
